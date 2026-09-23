@@ -7,6 +7,10 @@ const url = require('url');
 const bookingHandler = require('./api/booking');
 const homeServiceHandler = require('./api/home-service');
 const getBookingsHandler = require('./api/get-bookings');
+const signupHandler = require('./api/signup');
+const loginHandler = require('./api/login');
+const googleAuthHandler = require('./api/google-auth');
+const userProfileHandler = require('./api/user-profile');
 
 const PORT = process.env.PORT || 3000;
 
@@ -70,6 +74,22 @@ const server = http.createServer(async (req, res) => {
   }
   if (pathname === '/api/get-bookings' || pathname === '/api/get-bookings/') {
     return getBookingsHandler(req, res);
+  }
+  if (pathname === '/api/signup' || pathname === '/api/signup/') {
+    req.body = await parseRequestBody(req);
+    return signupHandler(req, res);
+  }
+  if (pathname === '/api/login' || pathname === '/api/login/') {
+    req.body = await parseRequestBody(req);
+    return loginHandler(req, res);
+  }
+  if (pathname === '/api/google-auth' || pathname === '/api/google-auth/') {
+    req.body = await parseRequestBody(req);
+    return googleAuthHandler(req, res);
+  }
+  if (pathname === '/api/user-profile' || pathname === '/api/user-profile/') {
+    req.body = await parseRequestBody(req);
+    return userProfileHandler(req, res);
   }
 
   // ── SPA Direct Routes Handler ──

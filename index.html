@@ -497,6 +497,7 @@
       }
     }
   </style>
+  <script src="https://accounts.google.com/gsi/client" async defer onload="initGoogleAuth()"></script>
 </head>
 
 <body class="text-on-background antialiased min-h-screen font-body-md text-body-md bg-background overflow-x-hidden">
@@ -534,10 +535,10 @@
           class="md:hidden w-9 h-9 flex items-center justify-center text-primary dark:text-dark-primary rounded-full hover:bg-primary/10 dark:hover:bg-dark-primary/10 transition-colors">
           <span class="material-symbols-outlined text-xl">menu</span>
         </button>
-        <div class="w-9 h-9 rounded-full overflow-hidden border border-white/50 dark:border-dark-border shadow-sm">
-          <img alt="Profile" class="w-full h-full object-cover"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNSBHA6oBna8mdYWKzoxNz5I8D9vitO1D2v0phiD4nPUbLsjHxRoQPoOFgExYLvCuL0SVR6c5gPrlnvBRczVGx3DeEZ1sQeQb3WVAdhNSF7ipzlyLtap9KJfzAcBYnPJAdAtM6-TfstJk2tLFfLOIFVe_rsDJ6TyVuDPr-eMSXFKNABo5PAOUvdnVmfhoqvJcd0PG-puwOjq6SRd2OlpdaXx5TpSu6182LACNxc6DTpbvR2JzlBxwQlQ" />
-        </div>
+        <button id="user-profile-btn" onclick="openUserAuthModal()" class="w-9 h-9 rounded-full overflow-hidden border border-white/50 dark:border-dark-border shadow-sm flex items-center justify-center bg-surface-container-high dark:bg-dark-surface-overlay text-primary dark:text-dark-primary outline-none focus:ring-2 focus:ring-primary">
+          <span id="user-profile-icon" class="material-symbols-outlined text-[18px]">person</span>
+          <img id="user-profile-img" alt="Profile" class="w-full h-full object-cover rounded-full hidden" referrerpolicy="no-referrer" src="" />
+        </button>
       </div>
     </div>
     <!-- Mobile Menu -->
@@ -2639,6 +2640,484 @@
       showToast(html.classList.contains('dark') ? '🌙 Dark Mode On' : '☀️ Light Mode On', 'info');
     });
 
+    /* ── User Authentication & Profile System ── */
+    function checkUserAuth() {
+      const token = localStorage.getItem('userToken');
+      const userData = localStorage.getItem('userData');
+      const profileBtn = document.getElementById('user-profile-btn');
+      const profileIcon = document.getElementById('user-profile-icon');
+      const profileImg = document.getElementById('user-profile-img');
+
+      if (token && userData) {
+        try {
+          const user = JSON.parse(userData);
+          profileIcon.classList.add('hidden');
+          
+          // Use Google profile picture if available, fallback to UI-Avatars
+          const avatarUrl = user.picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random`;
+          profileImg.src = avatarUrl;
+          profileImg.classList.remove('hidden');
+          profileBtn.title = 'Logged in as ' + user.name;
+          profileBtn.onclick = openUserProfileModal;
+
+          // Auto-fill booking inputs if present
+          const nameInput = document.getElementById('client-name');
+          const emailInput = document.getElementById('client-email');
+          const phoneInput = document.getElementById('client-phone');
+          if (nameInput && !nameInput.value) nameInput.value = user.name;
+          if (emailInput && !emailInput.value) emailInput.value = user.email;
+          if (phoneInput && !phoneInput.value && user.phone) phoneInput.value = user.phone;
+        } catch (e) {
+          localStorage.removeItem('userToken');
+          localStorage.removeItem('userData');
+        }
+      } else {
+        profileIcon.classList.remove('hidden');
+        profileImg.classList.add('hidden');
+        profileBtn.title = 'Sign In / Sign Up';
+        profileBtn.onclick = () => openUserAuthModal('login');
+      }
+    }
+
+    function initGoogleAuth() {
+      if (window.google && window.google.accounts) {
+        try {
+          google.accounts.id.initialize({
+            client_id: "580296876657-3so04tgqlql0080huflrtk2d802mtd8h.apps.googleusercontent.com",
+            callback: handleGoogleAuthCallback,
+            auto_select: false
+          });
+          renderGoogleBtn();
+        } catch (e) {
+          console.warn("Google Auth Init Warning:", e);
+        }
+      }
+    }
+
+    function renderGoogleBtn() {
+      const container = document.getElementById("google-signin-btn-container");
+      if (!container) return;
+      if (window.google && window.google.accounts) {
+        container.innerHTML = '';
+        try {
+          google.accounts.id.renderButton(
+            container,
+            {
+              theme: document.documentElement.classList.contains('dark') ? "filled_black" : "outline",
+              size: "large",
+              text: "continue_with",
+              shape: "pill",
+              width: 320
+            }
+          );
+        } catch(err) {
+          renderFallbackGoogleBtn(container);
+        }
+      } else {
+        renderFallbackGoogleBtn(container);
+      }
+    }
+
+    function renderFallbackGoogleBtn(container) {
+      container.innerHTML = `
+        <button type="button" onclick="triggerGoogleAuthPrompt()" class="w-full py-2.5 bg-surface-container-low dark:bg-dark-surface-raised border border-outline-variant/60 dark:border-dark-border rounded-xl font-label-sm text-sm text-on-surface dark:text-dark-text shadow-sm hover:bg-surface-container-high dark:hover:bg-dark-border transition-all flex items-center justify-center gap-2 group">
+          <svg class="w-5 h-5 transition-transform group-hover:scale-110" viewBox="0 0 24 24">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+      `;
+    }
+
+    function triggerGoogleAuthPrompt() {
+      if (window.google && window.google.accounts) {
+        google.accounts.id.prompt();
+      } else {
+        showToast('Google Sign-In is loading or unavailable.', 'info');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkUserAuth();
+      if (window.google && window.google.accounts) {
+        initGoogleAuth();
+      }
+    });
+
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        return {};
+      }
+    }
+
+    async function handleGoogleAuthCallback(response) {
+      if (!response.credential) return;
+      const errorDiv = document.getElementById('user-auth-error');
+      const googlePayload = parseJwt(response.credential);
+      try {
+        const res = await fetch(`/api/google-auth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: response.credential })
+        });
+        const data = await res.json();
+        if (data.success) {
+          if (googlePayload && googlePayload.picture && (!data.user.picture || data.user.picture === '')) {
+            data.user.picture = googlePayload.picture;
+          }
+          localStorage.setItem('userToken', data.token);
+          localStorage.setItem('userData', JSON.stringify(data.user));
+          showToast(`Welcome via Google, ${data.user.name}!`, 'success');
+          closeUserAuthModal();
+          checkUserAuth();
+        } else {
+          errorDiv.textContent = data.message || 'Google Auth failed.';
+          errorDiv.classList.remove('hidden');
+        }
+      } catch (err) {
+        errorDiv.textContent = 'An error occurred during Google Auth. Please try again.';
+        errorDiv.classList.remove('hidden');
+      }
+    }
+
+    function openUserAuthModal(tab = 'login') {
+      const modal = document.getElementById('user-auth-modal');
+      const authForm = document.getElementById('user-auth-form');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        authForm.reset();
+        document.getElementById('user-auth-error').classList.add('hidden');
+        switchUserAuthTab(tab);
+      }
+    }
+
+    function closeUserAuthModal() {
+      const modal = document.getElementById('user-auth-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function switchUserAuthTab(tab) {
+      document.getElementById('user-auth-error').classList.add('hidden');
+      const loginTab = document.getElementById('tab-login');
+      const signupTab = document.getElementById('tab-signup');
+      const nameField = document.getElementById('auth-name-field');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const titleEl = document.getElementById('user-auth-title');
+      const subtitleEl = document.getElementById('user-auth-subtitle');
+      const footerSwitch = document.getElementById('auth-footer-switch');
+
+      if (tab === 'login') {
+        loginTab.classList.add('border-primary', 'text-primary');
+        loginTab.classList.remove('border-transparent', 'text-on-surface-variant', 'dark:text-dark-text-secondary');
+        signupTab.classList.add('border-transparent', 'text-on-surface-variant', 'dark:text-dark-text-secondary');
+        signupTab.classList.remove('border-primary', 'text-primary');
+        nameField.classList.add('hidden');
+        document.getElementById('auth-name-input').required = false;
+        submitBtn.textContent = 'Sign In';
+        if (titleEl) titleEl.innerHTML = '<span class="material-symbols-outlined text-primary dark:text-dark-primary">account_circle</span> Welcome Back';
+        if (subtitleEl) subtitleEl.textContent = 'Sign in to manage your appointments & bookings';
+        if (footerSwitch) {
+          footerSwitch.innerHTML = 'Don\'t have an account? <button type="button" onclick="switchUserAuthTab(\'signup\')" class="text-primary dark:text-dark-primary font-semibold hover:underline">Sign Up</button>';
+        }
+        document.getElementById('user-auth-form').dataset.mode = 'login';
+      } else {
+        signupTab.classList.add('border-primary', 'text-primary');
+        signupTab.classList.remove('border-transparent', 'text-on-surface-variant', 'dark:text-dark-text-secondary');
+        loginTab.classList.add('border-transparent', 'text-on-surface-variant', 'dark:text-dark-text-secondary');
+        loginTab.classList.remove('border-primary', 'text-primary');
+        nameField.classList.remove('hidden');
+        document.getElementById('auth-name-input').required = true;
+        submitBtn.textContent = 'Create Account';
+        if (titleEl) titleEl.innerHTML = '<span class="material-symbols-outlined text-primary dark:text-dark-primary">person_add</span> Create Account';
+        if (subtitleEl) subtitleEl.textContent = 'Join The Style Room for personalized salon services';
+        if (footerSwitch) {
+          footerSwitch.innerHTML = 'Already have an account? <button type="button" onclick="switchUserAuthTab(\'login\')" class="text-primary dark:text-dark-primary font-semibold hover:underline">Sign In</button>';
+        }
+        document.getElementById('user-auth-form').dataset.mode = 'signup';
+      }
+
+      setTimeout(renderGoogleBtn, 100);
+    }
+
+    async function handleUserAuth(e) {
+      e.preventDefault();
+      const mode = e.target.dataset.mode;
+      const errorDiv = document.getElementById('user-auth-error');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      
+      const email = document.getElementById('auth-email-input').value;
+      const password = document.getElementById('auth-password-input').value;
+      const name = document.getElementById('auth-name-input').value;
+
+      errorDiv.classList.add('hidden');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Please wait...';
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch(`/api/${mode}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, name })
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+          localStorage.setItem('userToken', data.token);
+          localStorage.setItem('userData', JSON.stringify(data.user));
+          showToast(`Welcome ${mode === 'signup' ? '' : 'back'}, ${data.user.name}!`, 'success');
+          closeUserAuthModal();
+          checkUserAuth();
+        } else {
+          errorDiv.textContent = data.message || 'Authentication failed.';
+          errorDiv.classList.remove('hidden');
+        }
+      } catch (err) {
+        errorDiv.textContent = 'An error occurred. Please try again.';
+        errorDiv.classList.remove('hidden');
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    }
+
+    /* ── User Profile Drawer & History ── */
+    async function openUserProfileModal() {
+      const modal = document.getElementById('user-profile-modal');
+      if (!modal) return;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      // Populate initial values from local storage
+      const storedUser = JSON.parse(localStorage.getItem('userData') || '{}');
+      populateProfileHeader(storedUser);
+
+      // Default to personal info tab
+      switchProfileTab('info');
+
+      // Fetch fresh profile data & payment history from server
+      await fetchUserProfileData();
+    }
+
+    function populateProfileHeader(user) {
+      if (!user.name) return;
+
+      const nameEl = document.getElementById('user-profile-modal-name');
+      const emailEl = document.getElementById('user-profile-modal-email');
+      const imgEl = document.getElementById('user-profile-modal-img');
+      const badgeEl = document.getElementById('user-profile-provider-badge');
+
+      if (nameEl) nameEl.textContent = user.name;
+      if (emailEl) emailEl.textContent = user.email;
+
+      const avatarUrl = user.picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=random`;
+      if (imgEl) imgEl.src = avatarUrl;
+
+      if (badgeEl) {
+        if (user.provider === 'google') {
+          badgeEl.innerHTML = `
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Google Account
+            </span>
+          `;
+        } else {
+          badgeEl.innerHTML = `
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary dark:text-dark-primary border border-primary/20">
+              <span class="material-symbols-outlined text-[14px]">verified</span>
+              Style Room Member
+            </span>
+          `;
+        }
+      }
+
+      // Populate input fields
+      const pName = document.getElementById('profile-name-input');
+      const pEmail = document.getElementById('profile-email-input');
+      const pPhone = document.getElementById('profile-phone-input');
+      const pAddress = document.getElementById('profile-address-input');
+
+      if (pName) pName.value = user.name || '';
+      if (pEmail) pEmail.value = user.email || '';
+      if (pPhone) pPhone.value = user.phone || '';
+      if (pAddress) pAddress.value = user.address || '';
+    }
+
+    async function fetchUserProfileData() {
+      const token = localStorage.getItem('userToken');
+      if (!token) return;
+
+      try {
+        const res = await fetch('/api/user-profile', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (data.success && data.user) {
+          localStorage.setItem('userData', JSON.stringify(data.user));
+          populateProfileHeader(data.user);
+          renderPaymentAndBookingHistory(data.bookings || []);
+          checkUserAuth();
+        }
+      } catch (err) {
+        console.error('Failed to load fresh user profile:', err);
+      }
+    }
+
+    function switchProfileTab(tab) {
+      const infoTab = document.getElementById('profile-tab-info');
+      const historyTab = document.getElementById('profile-tab-history');
+      const infoContent = document.getElementById('profile-content-info');
+      const historyContent = document.getElementById('profile-content-history');
+
+      if (tab === 'info') {
+        infoTab.classList.add('border-primary', 'text-primary');
+        infoTab.classList.remove('border-transparent', 'text-on-surface-variant', 'dark:text-dark-text-secondary');
+        historyTab.classList.add('border-transparent', 'text-on-surface-variant', 'dark:text-dark-text-secondary');
+        historyTab.classList.remove('border-primary', 'text-primary');
+        infoContent.classList.remove('hidden');
+        historyContent.classList.add('hidden');
+      } else {
+        historyTab.classList.add('border-primary', 'text-primary');
+        historyTab.classList.remove('border-transparent', 'text-on-surface-variant', 'dark:text-dark-text-secondary');
+        infoTab.classList.add('border-transparent', 'text-on-surface-variant', 'dark:text-dark-text-secondary');
+        infoTab.classList.remove('border-primary', 'text-primary');
+        historyContent.classList.remove('hidden');
+        infoContent.classList.add('hidden');
+      }
+    }
+
+    async function handleProfileSave(e) {
+      e.preventDefault();
+      const token = localStorage.getItem('userToken');
+      if (!token) return;
+
+      const submitBtn = document.getElementById('profile-save-btn');
+      const name = document.getElementById('profile-name-input').value;
+      const phone = document.getElementById('profile-phone-input').value;
+      const address = document.getElementById('profile-address-input').value;
+
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Saving...';
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/user-profile', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ name, phone, address })
+        });
+        const data = await res.json();
+        if (data.success) {
+          localStorage.setItem('userData', JSON.stringify(data.user));
+          populateProfileHeader(data.user);
+          showToast('Profile updated successfully!', 'success');
+          checkUserAuth();
+        } else {
+          showToast(data.message || 'Failed to update profile.', 'error');
+        }
+      } catch (err) {
+        showToast('Error updating profile. Please try again.', 'error');
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    }
+
+    function renderPaymentAndBookingHistory(bookings) {
+      const container = document.getElementById('profile-history-list');
+      if (!container) return;
+
+      if (!bookings || bookings.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 px-4 border border-dashed border-outline-variant/60 dark:border-dark-border rounded-xl">
+            <span class="material-symbols-outlined text-4xl text-outline dark:text-dark-text-muted mb-2">receipt_long</span>
+            <h4 class="font-label-lg font-semibold text-on-surface dark:text-dark-text text-sm">No History Found</h4>
+            <p class="text-xs text-on-surface-variant dark:text-dark-text-secondary mt-1">You haven't placed any bookings yet. Book an appointment to see payment history!</p>
+            <button onclick="closeUserProfileModal(); openBookingModal('all');" class="mt-3 px-4 py-2 bg-primary/10 text-primary dark:text-dark-primary font-semibold text-xs rounded-lg hover:bg-primary/20 transition-colors">
+              Book Appointment Now
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = bookings.map(b => `
+        <div class="p-3.5 bg-surface-container-lowest dark:bg-dark-surface-raised border border-outline-variant/60 dark:border-dark-border rounded-xl text-left flex flex-col gap-2">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="inline-block px-2 py-0.5 text-[10px] font-bold rounded ${b.type === 'home_service' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'} uppercase tracking-wider mb-1">
+                ${b.type === 'home_service' ? '🏠 Home Service' : '✂️ Salon Visit'}
+              </span>
+              <h5 class="font-label-lg font-bold text-sm text-on-surface dark:text-dark-text">${b.service}</h5>
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${b.status === 'confirmed' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300'}">
+              ${b.status.toUpperCase()}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs text-on-surface-variant dark:text-dark-text-secondary pt-1 border-t border-surface-dim dark:border-dark-border">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[15px] text-primary dark:text-dark-primary">calendar_today</span>
+              <span>${b.date}</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[15px] text-primary dark:text-dark-primary">schedule</span>
+              <span>${b.time}</span>
+            </div>
+            <div class="flex items-center gap-1.5 col-span-2">
+              <span class="material-symbols-outlined text-[15px] text-primary dark:text-dark-primary">person</span>
+              <span>Stylist: ${b.stylist || 'Any Stylist'}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-surface-dim dark:border-dark-border text-xs">
+            <span class="text-on-surface-variant dark:text-dark-text-muted">Payment Method:</span>
+            <span class="font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">payments</span>
+              Pay at Salon / Service
+            </span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function closeUserProfileModal() {
+      const modal = document.getElementById('user-profile-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function handleUserSignOut() {
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userData');
+      closeUserProfileModal();
+      showToast('Signed out successfully', 'info');
+      checkUserAuth();
+    }
+
     /* ── Admin Portal Password Protection & Routing ── */
     let pendingAdminSection = null;
 
@@ -3997,6 +4476,211 @@
       closeTimeSettingsModal();
     }
   </script>
+
+  <!-- User Authentication Modal -->
+  <div id="user-auth-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-md p-4 animate-fade-in">
+    <div
+      class="relative w-full max-w-sm bg-white dark:bg-dark-surface rounded-2xl p-6 shadow-2xl border border-white/50 dark:border-dark-border overflow-hidden">
+      <!-- Background Glow -->
+      <div
+        class="absolute -top-12 -right-12 w-32 h-32 bg-primary/20 dark:bg-dark-primary/20 rounded-full blur-2xl pointer-events-none">
+      </div>
+
+      <div class="flex justify-between items-start mb-3 relative z-10">
+        <div>
+          <h3 id="user-auth-title" class="font-headline-md text-headline-md text-on-surface dark:text-dark-text tracking-tight flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary dark:text-dark-primary">account_circle</span>
+            Welcome Back
+          </h3>
+          <p id="user-auth-subtitle" class="text-xs text-on-surface-variant dark:text-dark-text-secondary mt-0.5">Sign in to manage your appointments & bookings</p>
+        </div>
+        <button onclick="closeUserAuthModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-high dark:bg-dark-surface-overlay dark:hover:bg-dark-border text-on-surface-variant dark:text-dark-text-muted transition-colors">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <div class="flex border-b border-surface-dim dark:border-dark-border mb-4 relative z-10 w-full text-center">
+        <button id="tab-login" type="button" onclick="switchUserAuthTab('login')" class="flex-1 py-2 font-label-sm border-b-2 border-primary text-primary transition-all flex items-center justify-center gap-1.5 font-medium">
+          <span class="material-symbols-outlined text-[16px]">login</span>
+          Sign In
+        </button>
+        <button id="tab-signup" type="button" onclick="switchUserAuthTab('signup')" class="flex-1 py-2 font-label-sm border-b-2 border-transparent text-on-surface-variant dark:text-dark-text-secondary transition-all flex items-center justify-center gap-1.5 font-medium">
+          <span class="material-symbols-outlined text-[16px]">person_add</span>
+          Sign Up
+        </button>
+      </div>
+
+      <form id="user-auth-form" class="flex flex-col gap-3.5 relative z-10" data-mode="login" onsubmit="handleUserAuth(event)">
+        
+        <div id="user-auth-error" class="hidden p-2.5 rounded-lg bg-error-container/30 dark:bg-dark-error/10 border border-error/20 text-error dark:text-dark-error text-xs font-medium flex items-center gap-2"></div>
+
+        <div id="auth-name-field" class="hidden">
+          <label class="block font-label-sm text-xs text-on-surface-variant dark:text-dark-text-secondary mb-1">Full Name</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-outline dark:text-dark-text-muted pointer-events-none">
+              <span class="material-symbols-outlined text-[16px]">person</span>
+            </span>
+            <input type="text" id="auth-name-input" class="w-full pl-9 pr-3 py-2 bg-surface-container-lowest dark:bg-dark-surface-raised border border-outline-variant/60 dark:border-dark-border rounded-xl text-on-surface dark:text-dark-text text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="e.g. John Doe" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-label-sm text-xs text-on-surface-variant dark:text-dark-text-secondary mb-1">Email Address</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-outline dark:text-dark-text-muted pointer-events-none">
+              <span class="material-symbols-outlined text-[16px]">mail</span>
+            </span>
+            <input type="email" id="auth-email-input" required class="w-full pl-9 pr-3 py-2 bg-surface-container-lowest dark:bg-dark-surface-raised border border-outline-variant/60 dark:border-dark-border rounded-xl text-on-surface dark:text-dark-text text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="name@example.com" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-label-sm text-xs text-on-surface-variant dark:text-dark-text-secondary mb-1">Password</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-outline dark:text-dark-text-muted pointer-events-none">
+              <span class="material-symbols-outlined text-[16px]">lock</span>
+            </span>
+            <input type="password" id="auth-password-input" required class="w-full pl-9 pr-10 py-2 bg-surface-container-lowest dark:bg-dark-surface-raised border border-outline-variant/60 dark:border-dark-border rounded-xl text-on-surface dark:text-dark-text text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="••••••••" />
+          </div>
+        </div>
+
+        <button type="submit" id="auth-submit-btn" class="w-full mt-1 py-2.5 bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-bg rounded-xl font-label-sm text-sm hover:opacity-90 transition-opacity font-semibold shadow-md">
+          Sign In
+        </button>
+
+        <div class="relative flex items-center py-1">
+          <div class="flex-grow border-t border-outline-variant/60 dark:border-dark-border"></div>
+          <span class="flex-shrink-0 mx-4 text-on-surface-variant dark:text-dark-text-muted text-[11px] font-semibold uppercase tracking-wider">OR</span>
+          <div class="flex-grow border-t border-outline-variant/60 dark:border-dark-border"></div>
+        </div>
+
+        <div id="google-signin-btn-container" class="flex justify-center w-full min-h-[40px]"></div>
+
+        <div class="text-center mt-1 pt-2 border-t border-surface-dim dark:border-dark-border">
+          <p id="auth-footer-switch" class="text-xs text-on-surface-variant dark:text-dark-text-secondary">
+            Don't have an account? <button type="button" onclick="switchUserAuthTab('signup')" class="text-primary dark:text-dark-primary font-semibold hover:underline">Sign Up</button>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Logged In User Profile Section Modal -->
+  <div id="user-profile-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-md p-4 animate-fade-in">
+    <div
+      class="relative w-full max-w-lg bg-white dark:bg-dark-surface rounded-2xl p-6 shadow-2xl border border-white/50 dark:border-dark-border overflow-hidden max-h-[90vh] flex flex-col">
+      <!-- Ambient Glow -->
+      <div class="absolute -top-12 -right-12 w-36 h-36 bg-primary/20 dark:bg-dark-primary/20 rounded-full blur-2xl pointer-events-none"></div>
+
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center mb-4 relative z-10 pb-3 border-b border-surface-dim dark:border-dark-border">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary dark:text-dark-primary text-2xl">account_circle</span>
+          <h3 class="font-headline-sm text-lg text-on-surface dark:text-dark-text font-bold">My Account Profile</h3>
+        </div>
+        <button onclick="closeUserProfileModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-high dark:bg-dark-surface-overlay dark:hover:bg-dark-border text-on-surface-variant dark:text-dark-text-muted transition-colors">
+          <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+      </div>
+
+      <!-- Profile Header Summary Card -->
+      <div class="flex items-center gap-4 p-4 bg-surface-container-lowest dark:bg-dark-surface-raised rounded-xl border border-outline-variant/60 dark:border-dark-border mb-4 relative z-10">
+        <div class="relative w-16 h-16 rounded-full overflow-hidden border-2 border-primary/80 shadow-md flex-shrink-0">
+          <img id="user-profile-modal-img" src="" alt="Google Profile Avatar" class="w-full h-full object-cover rounded-full" referrerpolicy="no-referrer" />
+        </div>
+        <div class="overflow-hidden flex-grow">
+          <h4 id="user-profile-modal-name" class="font-headline-sm text-base text-on-surface dark:text-dark-text font-bold truncate">Loading...</h4>
+          <p id="user-profile-modal-email" class="text-xs text-on-surface-variant dark:text-dark-text-secondary truncate mb-1"></p>
+          <div id="user-profile-provider-badge"></div>
+        </div>
+      </div>
+
+      <!-- Profile Navigation Tabs -->
+      <div class="flex border-b border-surface-dim dark:border-dark-border mb-4 relative z-10 w-full text-center">
+        <button id="profile-tab-info" type="button" onclick="switchProfileTab('info')" class="flex-1 py-2 font-label-sm border-b-2 border-primary text-primary transition-all flex items-center justify-center gap-1.5 font-medium text-xs">
+          <span class="material-symbols-outlined text-[16px]">badge</span>
+          Personal Info
+        </button>
+        <button id="profile-tab-history" type="button" onclick="switchProfileTab('history')" class="flex-1 py-2 font-label-sm border-b-2 border-transparent text-on-surface-variant dark:text-dark-text-secondary transition-all flex items-center justify-center gap-1.5 font-medium text-xs">
+          <span class="material-symbols-outlined text-[16px]">receipt_long</span>
+          Booking & Payment History
+        </button>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="overflow-y-auto flex-1 pr-1 custom-scrollbar relative z-10">
+        <!-- Personal Information Form -->
+        <div id="profile-content-info" class="flex flex-col gap-3">
+          <form onsubmit="handleProfileSave(event)" class="flex flex-col gap-3">
+            <div>
+              <label class="block font-label-sm text-xs text-on-surface-variant dark:text-dark-text-secondary mb-1">Full Name</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-outline dark:text-dark-text-muted pointer-events-none">
+                  <span class="material-symbols-outlined text-[16px]">person</span>
+                </span>
+                <input type="text" id="profile-name-input" required class="w-full pl-9 pr-3 py-2 bg-surface-container-lowest dark:bg-dark-surface-raised border border-outline-variant/60 dark:border-dark-border rounded-xl text-on-surface dark:text-dark-text text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Your Name" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-label-sm text-xs text-on-surface-variant dark:text-dark-text-secondary mb-1">Email Address (Primary)</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-outline dark:text-dark-text-muted pointer-events-none">
+                  <span class="material-symbols-outlined text-[16px]">mail</span>
+                </span>
+                <input type="email" id="profile-email-input" readonly disabled class="w-full pl-9 pr-3 py-2 bg-surface-container/50 dark:bg-dark-surface-overlay border border-outline-variant/40 dark:border-dark-border/40 rounded-xl text-on-surface-variant dark:text-dark-text-muted text-xs cursor-not-allowed" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-label-sm text-xs text-on-surface-variant dark:text-dark-text-secondary mb-1">Mobile Number</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-outline dark:text-dark-text-muted pointer-events-none">
+                  <span class="material-symbols-outlined text-[16px]">call</span>
+                </span>
+                <input type="tel" id="profile-phone-input" class="w-full pl-9 pr-3 py-2 bg-surface-container-lowest dark:bg-dark-surface-raised border border-outline-variant/60 dark:border-dark-border rounded-xl text-on-surface dark:text-dark-text text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="+91 9876543210" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-label-sm text-xs text-on-surface-variant dark:text-dark-text-secondary mb-1">Delivery / Home Address</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 pl-3 pt-2 text-outline dark:text-dark-text-muted pointer-events-none">
+                  <span class="material-symbols-outlined text-[16px]">home</span>
+                </span>
+                <textarea id="profile-address-input" rows="2" class="w-full pl-9 pr-3 py-2 bg-surface-container-lowest dark:bg-dark-surface-raised border border-outline-variant/60 dark:border-dark-border rounded-xl text-on-surface dark:text-dark-text text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Enter full address for home services..."></textarea>
+              </div>
+            </div>
+
+            <button type="submit" id="profile-save-btn" class="w-full mt-2 py-2 bg-primary dark:bg-dark-primary text-on-primary dark:text-dark-bg rounded-xl font-label-sm text-xs font-bold hover:opacity-90 transition-opacity shadow-sm flex items-center justify-center gap-1.5">
+              <span class="material-symbols-outlined text-[16px]">save</span>
+              Save Profile Changes
+            </button>
+          </form>
+        </div>
+
+        <!-- Payment & Booking History Area -->
+        <div id="profile-content-history" class="hidden">
+          <div id="profile-history-list" class="flex flex-col gap-2.5">
+            <div class="text-center py-6">
+              <span class="material-symbols-outlined text-2xl text-primary animate-spin">progress_activity</span>
+              <p class="text-xs text-on-surface-variant mt-2">Loading your booking history...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Sign Out -->
+      <div class="mt-4 pt-3 border-t border-surface-dim dark:border-dark-border relative z-10">
+        <button onclick="handleUserSignOut()" class="w-full py-2 bg-error/10 hover:bg-error/20 text-error border border-error/20 rounded-xl font-label-sm text-xs transition-colors flex items-center justify-center gap-1.5 font-semibold">
+          <span class="material-symbols-outlined text-[16px]">logout</span>
+          Sign Out
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Admin Authentication Modal -->
   <div id="admin-auth-modal"
