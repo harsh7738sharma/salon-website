@@ -1,0 +1,15 @@
+{
+  "name": "the-style-room",
+  "version": "1.0.0",
+  "description": "The Style Room Salon & Wellness Website with Serverless Functions for Email and Database",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.2.0",
+    "nodemailer": "^6.9.10"
+  }
+}

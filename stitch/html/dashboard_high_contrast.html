@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Serene Sanctuary - Salon Manager Dashboard</title>
+<!-- Fonts and Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Plus+Jakarta+Sans:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config injected from system instructions -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#6f6259",
+                        "primary-container": "#7ba083",
+                        "pure-white": "#FFFFFF",
+                        "secondary-fixed": "#f1dfd3",
+                        "soft-pearl": "#F2F4F7",
+                        "secondary-container": "#f1dfd3",
+                        "surface-container-highest": "#d9e3f7",
+                        "surface-variant": "#d9e3f7",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00210e",
+                        "charcoal-gray": "#121C2A",
+                        "surface-container-low": "#eff3ff",
+                        "primary": "#43664c",
+                        "on-surface": "#121c2a",
+                        "background": "#f8f9ff",
+                        "on-secondary-fixed-variant": "#50443c",
+                        "primary-fixed-dim": "#a9d0b1",
+                        "tertiary-container": "#a4948a",
+                        "on-background": "#121c2a",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c2c8c0",
+                        "surface": "#f8f9ff",
+                        "tertiary-fixed": "#f2dfd3",
+                        "secondary-fixed-dim": "#d5c3b8",
+                        "inverse-primary": "#a9d0b1",
+                        "outline": "#727972",
+                        "inverse-surface": "#273140",
+                        "surface-tint": "#43664c",
+                        "secondary": "#695c53",
+                        "on-primary-container": "#143620",
+                        "surface-dim": "#d0daee",
+                        "tertiary-fixed-dim": "#d5c3b8",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#424842",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#695c53",
+                        "on-tertiary-fixed": "#231a13",
+                        "sage-heavy": "#43664C",
+                        "on-secondary-fixed": "#231a13",
+                        "surface-container-high": "#dfe9fc",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#51443c",
+                        "on-tertiary-container": "#382d26",
+                        "primary-fixed": "#c5eccc",
+                        "on-primary-fixed-variant": "#2c4e36",
+                        "surface-container": "#e6eeff",
+                        "inverse-on-surface": "#ebf1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "bento-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-card {
+            @apply bg-pure-white rounded-[16px] shadow-[0_2px_4px_rgba(18,28,42,0.02),0_10px_20px_rgba(18,28,42,0.06)] border border-[#E2E8F0] p-6 hover:shadow-[0_20px_40px_rgba(18,28,42,0.1)] transition-shadow duration-300;
+        }
+        
+        /* Simple SVG Sparkline styling */
+        .sparkline {
+            fill: none;
+            stroke: #7ba083; /* primary-container */
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-soft-pearl min-h-screen text-on-surface font-body-md">
+<!-- TopAppBar -->
+<header class="bg-pure-white dark:bg-charcoal-gray fixed top-0 w-full z-50 border-b border-outline-variant/30 shadow-[0_2px_4px_rgba(18,28,42,0.02),0_10px_20px_rgba(18,28,42,0.06)]">
+<div class="flex justify-between items-center px-margin-desktop h-20 w-full max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary" data-icon="spa" data-weight="fill" style="font-variation-settings: 'FILL' 1;">spa</span>
+<span class="font-headline-md text-headline-md font-bold text-sage-heavy dark:text-inverse-primary">Serene Sanctuary</span>
+</div>
+<nav class="hidden md:flex gap-8 items-center h-full">
+<!-- Active Navigation: Dashboard -->
+<a class="h-full flex items-center text-primary font-semibold border-b-2 border-primary pb-1 active:scale-95 duration-200 hover:bg-soft-pearl dark:hover:bg-surface-variant transition-all px-4" href="#">Dashboard</a>
+<a class="h-full flex items-center text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 hover:bg-soft-pearl dark:hover:bg-surface-variant transition-all px-4" href="#">Bookings</a>
+<a class="h-full flex items-center text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 hover:bg-soft-pearl dark:hover:bg-surface-variant transition-all px-4" href="#">Stylists</a>
+<a class="h-full flex items-center text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 hover:bg-soft-pearl dark:hover:bg-surface-variant transition-all px-4" href="#">Services</a>
+<a class="h-full flex items-center text-on-surface-variant hover:text-primary transition-colors active:scale-95 duration-200 hover:bg-soft-pearl dark:hover:bg-surface-variant transition-all px-4" href="#">Analytics</a>
+</nav>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30">
+<img alt="Salon Manager Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a smiling female salon manager in a clean, modern, well-lit salon environment. The lighting is soft and bright, emphasizing a premium, structured serenity aesthetic with neutral tones and a subtle hint of sage green in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV1SXVPoR2itMuPpCxki68KfLvF3NwOcXbRC0fHoNWnHvKdotTwKUPjJyL_jfpsJUfOPrcnR-K9xGO-QXR1vgSJmmMIOscmlJdCe0uKMRBmlBRVk1NoZsMtyoqUDrGf4J7PG0KDHl2REydagBWK6ZLrKYzSzQWXBV1ULeBoMuVruv7nHGQvbYrZ3ty89yKn-xfY62A_Cu--fHlyDl8Li1S8GJ54I8kShS-bKyfKbQuglrwU8aFTpW2pA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Layout Container -->
+<div class="pt-28 pb-20 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto flex gap-8">
+<!-- NavigationDrawer (Sidebar) for Desktop -->
+<aside class="hidden lg:flex flex-col bg-pure-white dark:bg-charcoal-gray h-[calc(100vh-8rem)] w-72 rounded-r-none border-r border-outline-variant/30 shadow-[0_2px_4px_rgba(18,28,42,0.02),0_10px_20px_rgba(18,28,42,0.06)] flex-shrink-0 sticky top-24 rounded-lg overflow-hidden">
+<!-- Header Layout -->
+<div class="p-6 border-b border-outline-variant/30">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Salon Manager" class="w-full h-full object-cover" data-alt="A professional headshot of Elena Rossi, Senior Administrator, in a modern salon setting. Bright, high-key lighting, premium aesthetic, neutral palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYpuEa-NURftZxTIG77n2-psu2a1wEeUWyC4iP2KKf7Z4dGpbKYofLuiN0tPFjTrdBA8bfWJbHNs0lH4T8HbyEuGUrHRCRmQqBCJuT0JZJ5X6oV97gwz2-fJhH3R7bWimiPXhyQ9spyhPqF-SLwowBNKb0QYnyHKB1Kgra4aIiMbksyFPk6iP8QlgFADceBBt5vr_nmM5n7R30vldXwndZQwO3t8TG6ZPjuLF0bZjHHmBaDGqHHTWo4w"/>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-sage-heavy m-0">Elena Rossi</h2>
+<p class="font-body-md text-body-md text-on-surface-variant m-0">Senior Administrator</p>
+<span class="font-label-sm text-label-sm text-tertiary mt-1 block">Premium Tier</span>
+</div>
+</div>
+</div>
+<!-- Tab Layout -->
+<div class="flex flex-col p-6 gap-2 flex-grow overflow-y-auto font-body-md text-body-md text-primary dark:text-inverse-primary">
+<a class="flex items-center gap-4 p-3 bg-primary text-on-primary rounded-lg font-bold shadow-md hover:translate-x-1 transition-transform duration-200 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-soft-pearl dark:hover:bg-surface-variant rounded-lg hover:translate-x-1 transition-transform duration-200 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+                    Bookings
+                </a>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-soft-pearl dark:hover:bg-surface-variant rounded-lg hover:translate-x-1 transition-transform duration-200 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="content_cut">content_cut</span>
+                    Stylists
+                </a>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-soft-pearl dark:hover:bg-surface-variant rounded-lg hover:translate-x-1 transition-transform duration-200 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="dry_cleaning">dry_cleaning</span>
+                    Services
+                </a>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-soft-pearl dark:hover:bg-surface-variant rounded-lg hover:translate-x-1 transition-transform duration-200 transition-all duration-300 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="equalizer">equalizer</span>
+                    Analytics
+                </a>
+</div>
+</aside>
+<!-- Main Content Canvas (Bento Grid) -->
+<main class="flex-grow w-full">
+<!-- Welcome Section -->
+<div class="mb-8">
+<h1 class="font-display-lg text-display-lg text-charcoal-gray mb-2">Good morning, Elena.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Here is the overview of today's sanctuary operations.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-bento-gap auto-rows-[minmax(180px,auto)]">
+<!-- Card 1: Today's Revenue (Spans 8 cols on lg desktop, full width otherwise) -->
+<div class="bento-card md:col-span-12 lg:col-span-8 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-charcoal-gray mb-1">Today's Revenue</h3>
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Gross Sales</p>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="trending_up">trending_up</span>
+</div>
+<div class="mt-auto">
+<div class="font-display-lg text-display-lg text-charcoal-gray mb-4">$4,250.00</div>
+<!-- Sparkline Chart Placeholder -->
+<div class="h-24 w-full">
+<svg class="w-full h-full preserve-aspect-ratio-none" viewbox="0 0 400 100">
+<!-- Grid lines for structure -->
+<line stroke="#E2E8F0" stroke-dasharray="4" stroke-width="1" x1="0" x2="400" y1="80" y2="80"></line>
+<line stroke="#E2E8F0" stroke-dasharray="4" stroke-width="1" x1="0" x2="400" y1="40" y2="40"></line>
+<!-- The crisp Sage Green sparkline -->
+<path class="sparkline" d="M0,90 Q40,80 80,60 T160,50 T240,70 T320,30 T400,10"></path>
+<!-- Data points -->
+<circle cx="80" cy="60" fill="#7ba083" r="4"></circle>
+<circle cx="160" cy="50" fill="#7ba083" r="4"></circle>
+<circle cx="240" cy="70" fill="#7ba083" r="4"></circle>
+<circle cx="320" cy="30" fill="#7ba083" r="4"></circle>
+<circle cx="400" cy="10" fill="#43664c" r="6"></circle> <!-- Highlight last point -->
+</svg>
+</div>
+</div>
+</div>
+<!-- Card 2: Live Staff (Spans 4 cols on lg desktop) -->
+<div class="bento-card md:col-span-12 lg:col-span-4 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-charcoal-gray">Live Staff</h3>
+<span class="font-label-sm text-label-sm bg-tertiary-fixed text-on-tertiary-fixed px-2 py-1 rounded-full">3 Active</span>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Staff Item 1 -->
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/30">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Staff 1" class="w-full h-full object-cover" data-alt="A close-up headshot of a male hair stylist with short dark hair in a clean white salon smock. Bright, well-lit background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX91XomO5YQx1gwiqcA4srJhb3aBKU6WXf7E440ne3bpbdTQDjiBeGT-xHF4CFBfQr_07cFG9hZ8Vg8Grr1uzDaFcV9jwZWm6PXo2G_r2S1yqMJeNNKN4dfX5JfnoR3RAv_Q1m1j2lhR9XDL9h63Ry4nCVeLAdl-rJdrPt-Xwl05w0PHU4OmPx-aTYKNkwj6iasIxKfR8y2tTzCi-D7z-uiI1sV1zIyWiop2OSVcuvykNAbI0NFwJMdg"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-primary-container rounded-full border-2 border-pure-white"></div>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-charcoal-gray m-0">Julian C.</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant m-0">Colorist</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container">In Service</span>
+</div>
+<!-- Staff Item 2 -->
+<div class="flex items-center justify-between pb-4 border-b border-outline-variant/30">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Staff 2" class="w-full h-full object-cover" data-alt="A close-up headshot of a female esthetician with blonde hair tied back, wearing a clean white uniform. Premium salon aesthetic, soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUsIYwjO8TyTo92GyExCQ8dBLgGovFYRFl_Cckl2WoRdQGPaOM94qqsJRFW6oJIPRs2M47Gn7mWJts3wDa2uHfzzPPC77OPgXudD6y89ZTVs53N56XOIoGdV63gHf3euR8Fzi4nFDRe8DUapf-UnsgJzO8KQn4vkyBK2CZhek8V8EQ6EocAe-Csu-KIaIO6Sy-G3u2gX-IvcqfG09WkLR7IifGgauhOoWX9-1ZIlkhcPwLw2rRyFs2gA"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-primary-container rounded-full border-2 border-pure-white"></div>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-charcoal-gray m-0">Sarah M.</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant m-0">Esthetician</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Available</span>
+</div>
+<!-- Staff Item 3 -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="relative w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Staff 3" class="w-full h-full object-cover" data-alt="A close-up headshot of a male massage therapist with a warm smile, wearing a dark gray polo. High-end spa background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCpah5xPNNymDeMT5w30m4Xr176b-XeD-xLhsATeoN8Y_K2FZgJWBg9i7x6neYXCA-C360TPkjsYdfDcvpV-8TyjPDbztls9_2Mi4Ug9H9PkVABl9fCcR_bqUmtOXD0NsPd4UJ7ayQ1i-TvX0Y55Le1rOV-NGP0aQ_HZQ0F0bSP_D0dK9Rph7vqm2HVpPhPJEHK4yazxS8JQg0MK2Irxg7DGo-0vX7JxBK128jCqIgPyYDGKqUkjFmhg"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-error rounded-full border-2 border-pure-white"></div>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-charcoal-gray m-0">David R.</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant m-0">Massage</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-error">Break</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Recent Guest Love (Spans full width or 6 cols depending on grid layout preference) -->
+<div class="bento-card md:col-span-12 lg:col-span-6 flex flex-col">
+<h3 class="font-headline-md text-headline-md text-charcoal-gray mb-6">Recent Guest Love</h3>
+<div class="bg-soft-pearl p-6 rounded-lg border border-outline-variant/20 relative">
+<!-- Quote Icon -->
+<span class="material-symbols-outlined text-outline/20 absolute top-4 right-4 text-4xl" data-icon="format_quote">format_quote</span>
+<!-- Stars -->
+<div class="flex text-primary-container mb-3">
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-charcoal-gray italic mb-4">"Absolutely incredible service. Julian worked magic on my hair, and the entire atmosphere was so incredibly serene and structured. Will definitely be returning next month."</p>
+<div class="flex items-center gap-3 mt-auto">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-outline-variant">
+<img alt="Client" class="w-full h-full object-cover" data-alt="A casual lifestyle portrait of a happy female salon client with beautifully styled hair, outdoors in natural light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIkiX9CMfLY3izrJ8P-JnZwIDuEas5l71VsnaIDO8xH8KJzgDOhMmbw1cZwIMTyawofOQDYjUKweRdh54UNQG8N5UZwb359_Pni0VZDA_oDRdkjU2b0iAeDF8x4mgtaTVGENv37GQyZHz5ZH1qT7OOGW5vzEoxbL3diNFSzWVIOF6GniNMseYuAL4tm3I9x78ZPvobG_Jd0yrVsV0gz2XWkaZoQEjdml33XBIScl1L4F0BaNH9RCHEvg"/>
+</div>
+<div>
+<p class="font-body-md text-body-md font-bold text-charcoal-gray m-0 text-sm">Amanda K.</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant m-0">2 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4: Quick Actions (Filler for grid balance) -->
+<div class="bento-card md:col-span-12 lg:col-span-6 flex flex-col justify-center items-center text-center">
+<h3 class="font-headline-md text-headline-md text-charcoal-gray mb-2">Quick Actions</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Need to manage something urgently?</p>
+<div class="flex flex-wrap gap-4 justify-center">
+<button class="bg-primary-container text-pure-white font-body-md text-body-md font-bold py-3 px-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            New Booking
+                        </button>
+<button class="bg-pure-white text-charcoal-gray font-body-md text-body-md font-bold py-3 px-6 rounded-lg border border-charcoal-gray shadow-sm hover:bg-soft-pearl transition-colors">
+                            Block Schedule
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-soft-pearl dark:bg-surface-dim w-full py-12 border-t border-outline-variant/30">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-desktop max-w-7xl mx-auto gap-8">
+<span class="font-headline-md text-headline-md text-sage-heavy font-bold">Serene Sanctuary</span>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label-sm text-label-sm text-on-secondary-fixed-variant hover:text-primary transition-opacity duration-200 hover:opacity-80" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-secondary-fixed-variant hover:text-primary transition-opacity duration-200 hover:opacity-80" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-secondary-fixed-variant hover:text-primary transition-opacity duration-200 hover:opacity-80" href="#">Contact Support</a>
+<a class="font-label-sm text-label-sm text-on-secondary-fixed-variant hover:text-primary transition-opacity duration-200 hover:opacity-80" href="#">Salon Partners</a>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">© 2024 Serene Sanctuary Wellness. All rights reserved.</span>
+</div>
+</footer>
+</body></html>

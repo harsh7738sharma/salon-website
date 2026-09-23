@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Explore - Serene Sanctuary</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#805159",
+                        "on-surface": "#121c2a",
+                        "surface-container": "#e6eeff",
+                        "on-secondary-fixed-variant": "#50443c",
+                        "surface-container-low": "#eff4ff",
+                        "outline-variant": "#c2c8c0",
+                        "tertiary-fixed-dim": "#f3b7bf",
+                        "secondary": "#695c53",
+                        "tertiary-fixed": "#ffd9de",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#6d6057",
+                        "on-tertiary-fixed-variant": "#663a42",
+                        "on-primary-fixed": "#00210e",
+                        "secondary-fixed": "#f1dfd4",
+                        "on-primary-container": "#143620",
+                        "on-primary-fixed-variant": "#2c4e36",
+                        "primary": "#43664c",
+                        "secondary-fixed-dim": "#d5c3b8",
+                        "on-secondary-fixed": "#231a13",
+                        "surface-bright": "#f8f9ff",
+                        "surface-dim": "#d0dbed",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#27313f",
+                        "surface-tint": "#43664c",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-container": "#7ba083",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#efdcd1",
+                        "surface-container-highest": "#d9e3f6",
+                        "surface-variant": "#d9e3f6",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#424842",
+                        "surface-container-high": "#dee9fc",
+                        "background": "#f8f9ff",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#c5eccc",
+                        "outline": "#727972",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#a9d0b1",
+                        "tertiary-container": "#c08991",
+                        "inverse-primary": "#a9d0b1",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-container": "#4b242b",
+                        "on-background": "#121c2a",
+                        "on-tertiary-fixed": "#321017"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "1.5rem",
+                        "bento-gap": "1rem",
+                        "container-padding": "2rem",
+                        "safe": "env(safe-area-inset-bottom, 20px)"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "300" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "300" }],
+                        "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased min-h-screen font-body-md text-body-md pb-24 md:pb-0 md:pl-72 flex flex-col md:flex-row">
+<!-- Mobile TopAppBar -->
+<header class="md:hidden fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/60 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]">
+<div class="flex justify-between items-center px-gutter py-4">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-white/60 shadow-sm bg-surface-container-highest">
+<img alt="Salon Brand Logo" class="w-full h-full object-cover" data-alt="A macro shot of a luxurious white orchid blossom against a soft, pale gray background, perfectly lit to show the delicate texture of the petals. Serene, clean, minimalist high-end salon aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBn8_rnx-3p1qeAlvTBg6LCzpeBIO7zAhdQTl_Jh7Xb2d3fEymZ6Gpq6CbNXhUyaF0yPAM_JLuRnYedzTn8mwkSRfIiL9J9wZ120RyLEQAMNod019CTklnQIXnjOynijP4gUiA2vCcWA7aXs7TAlq_U0QFnJMvCrYGOohUa0P7ZyMELULNe4CI76Rhc8wRccOvZfOayDw2OhSQwRSk-G3CFhbgwdIwjF6OeVaBszCPSJuI04xkoo82oDQ"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Serene Sanctuary</h1>
+<button class="w-10 h-10 flex items-center justify-center text-primary rounded-full hover:bg-white/20 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-2xl">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Desktop NavigationDrawer -->
+<nav class="hidden md:flex flex-col h-full w-72 fixed left-0 top-0 bg-surface border-r border-white/60 shadow-xl z-50 p-4">
+<!-- Header Profile (Matches JSON logic despite search intent, assuming admin view based on JSON) -->
+<div class="flex items-center gap-4 mb-8 p-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-white/60 shadow-sm bg-surface-container-highest">
+<img alt="Manager Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a confident, stylish salon manager with a neat appearance. Soft, flattering high-key studio lighting against a clean white background. Serene, premium wellness aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt-LJeNtWVB3IfypPuw-EVUEzTTdq2uqpWLJKdmG51NkXWEeuKddm7IB7nI0SjbGEdYvrmNQIRTo2xcqP4IRGSL3uVAKhS3zG3TDTHmlTm95bZHhzLuutsUUrNtt3MpDfL1y7F7QDheR7Yrp7Nqshd8zWTtL8UThc-wcHk9bp6vM4eaNDwVs7TD0tFDN-x_mTdW32_A-SJLr1GNSBRRKJhoG60Or3kiRv4wrWqhKetOCNfNuFenkj01w"/>
+</div>
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">Salon Manager</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Serene Sanctuary HQ</p>
+</div>
+</div>
+<ul class="flex flex-col gap-2">
+<li>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-surface-container-low transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 p-3 bg-primary-container text-on-primary-container rounded-lg font-bold shadow-sm active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined filled-icon">explore</span>
+<span class="font-body-md text-body-md">Explore</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-surface-container-low transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">event_note</span>
+<span class="font-body-md text-body-md">Appointments</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-surface-container-low transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">group</span>
+<span class="font-body-md text-body-md">Staff</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-surface-container-low transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">payments</span>
+<span class="font-body-md text-body-md">Revenue</span>
+</a>
+</li>
+<li class="mt-auto">
+<a class="flex items-center gap-4 p-3 text-on-surface-variant hover:bg-surface-container-low transition-all rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-[1440px] mx-auto px-5 md:px-8 pt-24 md:pt-8 flex flex-col gap-8">
+<!-- Search & Filter Area -->
+<section class="flex flex-col gap-6">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tight">Find your sanctuary</h2>
+<div class="relative w-full max-w-2xl">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline">search</span>
+</div>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest/80 backdrop-blur-md border border-white/60 rounded-2xl shadow-[0_4px_24px_0_rgba(31,38,135,0.05)] text-on-surface placeholder:text-outline-variant focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all font-body-md text-body-md" placeholder="Search salons, stylists, or services..." type="text"/>
+<button class="absolute inset-y-2 right-2 px-4 bg-primary text-on-primary rounded-xl font-label-sm text-label-sm hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span class="hidden sm:inline">Filters</span>
+</button>
+</div>
+<!-- Category Chips -->
+<div class="flex overflow-x-auto hide-scrollbar gap-3 pb-2 -mx-5 px-5 md:mx-0 md:px-0">
+<button class="flex-shrink-0 px-6 py-2.5 bg-secondary-container/30 text-on-surface border border-white/60 rounded-full font-label-sm text-label-sm whitespace-nowrap shadow-sm hover:bg-secondary-container/50 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">content_cut</span>
+                    Hair
+                </button>
+<button class="flex-shrink-0 px-6 py-2.5 bg-surface-container-lowest/50 text-on-surface border border-white/60 rounded-full font-label-sm text-label-sm whitespace-nowrap shadow-sm hover:bg-surface-container-lowest transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">back_hand</span>
+                    Nails
+                </button>
+<button class="flex-shrink-0 px-6 py-2.5 bg-surface-container-lowest/50 text-on-surface border border-white/60 rounded-full font-label-sm text-label-sm whitespace-nowrap shadow-sm hover:bg-surface-container-lowest transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">spa</span>
+                    Spa
+                </button>
+<button class="flex-shrink-0 px-6 py-2.5 bg-surface-container-lowest/50 text-on-surface border border-white/60 rounded-full font-label-sm text-label-sm whitespace-nowrap shadow-sm hover:bg-surface-container-lowest transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">self_improvement</span>
+                    Massage
+                </button>
+</div>
+</section>
+<!-- Bento Grid Stylist List -->
+<section>
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Featured Stylists</h3>
+<a class="font-label-sm text-label-sm text-primary hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-2xl rounded-3xl p-4 border border-white/60 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] flex flex-col gap-4 group hover:-translate-y-1 transition-transform duration-300">
+<div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-surface-container-high">
+<img alt="Stylist Elena" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A bright, airy portrait of a female hair stylist holding shears. Soft, diffused natural light in a minimalist salon with white walls and subtle greenery. High contrast Lumina style, professional and serene." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADxh6KtkcIUD30TbCHfdvvl1GYqJdL4eVL-Hkx0oN6o2a3KK8GD34lZXHv5IIlVGD6arNfzexywBqoBXX9UY54NFMq0ss6-PjhFoTkdareWL-bkVDVrR_eYZJFNsbq9lEihwBRdyw8TjXo6i8IHZMNiFJmpHQLUYQ5GdtVa517qicqY4B69VeR7Aa53IqC59fvbXAxUpd1yNEqYkN6fPvCPKGYDXGeM2Apf_1JVMqyWjNPtOSMfLP8kQ"/>
+<div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1 border border-white/40 shadow-sm">
+<span class="material-symbols-outlined filled-icon text-[14px] text-tertiary">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.9</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<h4 class="font-headline-md text-headline-md text-on-surface">Elena Rostova</h4>
+<p class="font-body-md text-body-md text-on-surface-variant/80 text-sm">Master Colorist • 2mi away</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="px-2 py-1 bg-secondary-container/20 text-on-secondary-container rounded-md font-label-sm text-[10px] tracking-wider uppercase border border-white/40">Balayage</span>
+<span class="px-2 py-1 bg-secondary-container/20 text-on-secondary-container rounded-md font-label-sm text-[10px] tracking-wider uppercase border border-white/40">Extensions</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-2xl rounded-3xl p-4 border border-white/60 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] flex flex-col gap-4 group hover:-translate-y-1 transition-transform duration-300">
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-surface-container-high">
+<img alt="Therapist Julian" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A warm, inviting portrait of a male massage therapist standing near a massage table with fresh white linens. Soft amber accent lighting in a predominantly white room. Serene Sanctuary premium aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB19JYIAJKCtDiUeBLMJ1s395iAZiIhFdTjweYv1TmTRilwOe9GtEyV9VYR6ZzDeVhnPbPXE7WEX6bZlBnm22oS4_-vkadPpOaaSYjPxN2ruBEy5PQcaoL4lix3M_kz9rC0lQXJofweCoDfsaOXqe1ROYen5QX3eRtwwGVR4qadAHUaWlu8L9wOGkbfpMYajjgcFAA0Zw9x0YWjUD53jY7uqVlw-jfHyfws9o8YH5rhH5S6SI36vcGYnA"/>
+<div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1 border border-white/40 shadow-sm">
+<span class="material-symbols-outlined filled-icon text-[14px] text-tertiary">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">5.0</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<h4 class="font-headline-md text-headline-md text-on-surface">Julian Vance</h4>
+<p class="font-body-md text-body-md text-on-surface-variant/80 text-sm">Deep Tissue Specialist • 4mi away</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="px-2 py-1 bg-secondary-container/20 text-on-secondary-container rounded-md font-label-sm text-[10px] tracking-wider uppercase border border-white/40">Swedish</span>
+<span class="px-2 py-1 bg-secondary-container/20 text-on-secondary-container rounded-md font-label-sm text-[10px] tracking-wider uppercase border border-white/40">Sports Therapy</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-2xl rounded-3xl p-4 border border-white/60 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] flex flex-col gap-4 group hover:-translate-y-1 transition-transform duration-300 sm:col-span-2 lg:col-span-1">
+<div class="relative w-full aspect-video lg:aspect-square rounded-2xl overflow-hidden bg-surface-container-high">
+<img alt="Nail Tech Sarah" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A sophisticated close-up of beautifully manicured hands holding a small, smooth white stone. Crisp, bright lighting highlighting the glossy nail finish against a soft pearl background. High-end salon visual style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoqVzsGkKA_tRrcn8u9bExX7b6wbrNrhWH9dmDeB2rrWurICixDLVp84t5MPoOtwSOD1lIoh_XoG9gV1Z0prgsMxfZX5-y4Qazq0HFxnpd2p9s-wyojgtoxcm3d9LeLQQufV-jin85flUGJ1vAnwaQISAt1XeFJqHN7bi8U8_xPGV-h7IIERVdQbv6yFDjvpU_Cy45qM-pUA0bCzZH992Bn7CHgd1PZlrJhvcfoOAotbT4t5yYjUsKdg"/>
+<div class="absolute top-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1 border border-white/40 shadow-sm">
+<span class="material-symbols-outlined filled-icon text-[14px] text-tertiary">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.8</span>
+</div>
+</div>
+<div class="flex flex-col gap-1 px-1">
+<h4 class="font-headline-md text-headline-md text-on-surface">Sarah Chen</h4>
+<p class="font-body-md text-body-md text-on-surface-variant/80 text-sm">Nail Artist • 1mi away</p>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="px-2 py-1 bg-secondary-container/20 text-on-secondary-container rounded-md font-label-sm text-[10px] tracking-wider uppercase border border-white/40">Gel X</span>
+<span class="px-2 py-1 bg-secondary-container/20 text-on-secondary-container rounded-md font-label-sm text-[10px] tracking-wider uppercase border border-white/40">Nail Art</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Mobile BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface/40 backdrop-blur-xl border-t border-white/60 shadow-[0_-8px_32px_0_rgba(31,38,135,0.07)] rounded-t-2xl pb-safe">
+<ul class="flex justify-around items-center py-3 px-4">
+<li>
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-full px-5 py-1.5 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined filled-icon">explore</span>
+<span class="font-label-sm text-label-sm mt-1">Explore</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center text-secondary hover:opacity-80 transition-opacity active:scale-90 duration-200 px-2 py-1.5" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-sm text-label-sm mt-1">Bookings</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center text-secondary hover:opacity-80 transition-opacity active:scale-90 duration-200 px-2 py-1.5" href="#">
+<span class="material-symbols-outlined">content_cut</span>
+<span class="font-label-sm text-label-sm mt-1">Stylists</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center text-secondary hover:opacity-80 transition-opacity active:scale-90 duration-200 px-2 py-1.5" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</li>
+</ul>
+</nav>
+</body></html>

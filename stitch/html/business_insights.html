@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Serene Sanctuary - Business Insights</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500&amp;family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary": "#805159",
+                      "on-surface": "#121c2a",
+                      "surface-container": "#e6eeff",
+                      "on-secondary-fixed-variant": "#50443c",
+                      "surface-container-low": "#eff4ff",
+                      "outline-variant": "#c2c8c0",
+                      "tertiary-fixed-dim": "#f3b7bf",
+                      "secondary": "#695c53",
+                      "tertiary-fixed": "#ffd9de",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-container": "#6d6057",
+                      "on-tertiary-fixed-variant": "#663a42",
+                      "on-primary-fixed": "#00210e",
+                      "secondary-fixed": "#f1dfd4",
+                      "on-primary-container": "#143620",
+                      "on-primary-fixed-variant": "#2c4e36",
+                      "primary": "#43664c",
+                      "secondary-fixed-dim": "#d5c3b8",
+                      "on-secondary-fixed": "#231a13",
+                      "surface-bright": "#f8f9ff",
+                      "surface-dim": "#d0dbed",
+                      "on-error": "#ffffff",
+                      "inverse-surface": "#27313f",
+                      "surface-tint": "#43664c",
+                      "inverse-on-surface": "#eaf1ff",
+                      "primary-container": "#7ba083",
+                      "on-secondary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "secondary-container": "#efdcd1",
+                      "surface-container-highest": "#d9e3f6",
+                      "surface-variant": "#d9e3f6",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#424842",
+                      "surface-container-high": "#dee9fc",
+                      "background": "#f8f9ff",
+                      "error-container": "#ffdad6",
+                      "primary-fixed": "#c5eccc",
+                      "outline": "#727972",
+                      "on-error-container": "#93000a",
+                      "primary-fixed-dim": "#a9d0b1",
+                      "tertiary-container": "#c08991",
+                      "inverse-primary": "#a9d0b1",
+                      "surface": "#f8f9ff",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-container": "#4b242b",
+                      "on-background": "#121c2a",
+                      "on-tertiary-fixed": "#321017"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "8px",
+                      "gutter": "1.5rem",
+                      "bento-gap": "1rem",
+                      "container-padding": "2rem"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "display-lg": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "300"
+                              }
+                      ],
+                      "headline-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .glass-card {
+            background-color: rgba(255, 255, 255, 1); /* Solid white requested */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+        
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen font-body-md antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- App Shell -->
+<div class="flex h-screen overflow-hidden">
+<!-- NavigationDrawer (Desktop) -->
+<nav class="hidden md:flex flex-col gap-2 p-4 bg-surface dark:bg-on-surface h-full w-72 border-r border-white/60 dark:border-outline/20 shadow-xl z-40">
+<!-- Header Profile -->
+<div class="flex items-center gap-4 p-4 mb-6">
+<img class="w-12 h-12 rounded-full object-cover shadow-sm" data-alt="A professional headshot of a salon manager. Soft, natural lighting highlighting professional attire. The background is a slightly blurred, high-end, minimalist salon interior with white and soft green tones, conveying a serene and premium atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIFWYcYT80_rfbRQMPI6sE_B5brYL5E2WIwL83OkfCNNsjI7LWa7Ucv53QTBw4mTSaQJpV_gwZoncnI4c-BlXJsLVKx0iiKNMbFxIbpCaA_QDMkqaLW346taBaYzAPxHxuOwE0VeMBd1cYhALVDl-IXZU9VjaTR_9g4czew4fQEufB0tqU2WjKcYJcAIR6Qj-mKBMnLEkmAUiBTp9Vr389YwUquhMPZEtXPQidIg11ifuxd9CvlYqhHA"/>
+<div class="flex flex-col left_align">
+<span class="font-headline-md text-headline-md text-primary">Salon Manager</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Serene Sanctuary HQ</span>
+<span class="font-label-sm text-label-sm text-secondary mt-1">Premium Admin</span>
+</div>
+</div>
+<!-- Nav Links -->
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">event_note</span>
+<span class="font-body-md text-body-md">Appointments</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">group</span>
+<span class="font-body-md text-body-md">Staff</span>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg bg-primary-container text-on-primary-container font-bold active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-body-md text-body-md">Revenue</span>
+</a>
+<div class="mt-auto">
+<a class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-all active:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- TopAppBar (Mobile) -->
+<header class="md:hidden flex justify-between items-center px-gutter py-4 z-50 bg-surface/40 dark:bg-on-surface/40 backdrop-blur-xl border-b border-white/60 dark:border-outline/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)] sticky top-0 w-full">
+<div class="flex items-center gap-3">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A minimalist logo for a premium salon named Serene Sanctuary. The design uses delicate, thin lines forming a subtle organic shape, perhaps a stylized leaf or abstract face profile. The colors are muted, relying on soft sage green and white to maintain a high-end, clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcFGj62xvRxboUBVeUtnQPzpRa1ItQ3FLzH1wizOI50c5OXQVs7dm7rfl4nE-fFa6gqRs4TE9RHULyaEn_KN26KokCzPceWwSGMvfZyIqp9vO4N7CyZrVbGNoJjf5yw3Z_HxEiS3v-zvM-AF9H-Qm6jA1uD8eYLL-foTMT85pZ9YivcUHk4wFNC9ioWYlTGqkPGOPQ-BXz27TyjHxW8AFkYCQLuQyJpaeIlPosyECMkAHFnJ1TnLKWLw"/>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed tracking-tight">Serene Sanctuary</h1>
+</div>
+<button class="text-primary dark:text-primary-fixed hover:bg-white/20 transition-colors active:scale-95 duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</header>
+<!-- Page Content Canvas -->
+<div class="flex-1 overflow-y-auto p-4 md:p-8 lg:p-[64px]">
+<div class="mb-8 flex justify-between items-end">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-2">Business Insights</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Your salon's performance at a glance.</p>
+</div>
+<div class="hidden md:flex gap-4">
+<button class="px-6 py-2 rounded-full border border-white/60 bg-white/40 text-on-surface hover:bg-white/60 transition-colors font-body-md text-body-md shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]">Export Report</button>
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary hover:scale-[0.98] transition-transform font-body-md text-body-md">Date Range</button>
+</div>
+</div>
+<!-- Bento Grid Container -->
+<div class="bento-grid">
+<!-- Main Revenue Chart (Span 8 cols on desktop) -->
+<div class="glass-card p-6 md:p-8 col-span-12 lg:col-span-8 flex flex-col h-[400px]">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">Revenue Growth</h3>
+<p class="font-label-sm text-label-sm text-secondary">Past 30 Days vs Previous Period</p>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-primary text-sm">trending_up</span>
+<span class="font-label-sm text-label-sm text-primary">+14.2%</span>
+</div>
+</div>
+<div class="flex-1 relative w-full h-full flex items-end">
+<!-- Abstract Representation of a line chart using styling -->
+<div class="absolute inset-0 flex items-end pb-8">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0,80 Q10,70 20,75 T40,60 T60,65 T80,40 T100,20 L100,100 L0,100 Z" fill="url(#grad1)" opacity="0.3"></path>
+<path d="M0,80 Q10,70 20,75 T40,60 T60,65 T80,40 T100,20" fill="none" stroke="#43664c" stroke-linecap="round" stroke-width="2"></path>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#43664c;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#43664c;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+</div>
+</div>
+<!-- Guest Retention (Span 4 cols on desktop) -->
+<div class="glass-card p-6 md:p-8 col-span-12 lg:col-span-4 flex flex-col justify-between h-[400px]">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">Guest Retention</h3>
+<p class="font-label-sm text-label-sm text-secondary">Returning vs New</p>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center relative">
+<!-- Simple CSS circular indicator -->
+<div class="w-48 h-48 rounded-full border-[16px] border-surface-container-low flex items-center justify-center relative">
+<div class="absolute inset-0 rounded-full border-[16px] border-primary" style="clip-path: polygon(50% 50%, 50% 0, 100% 0, 100% 100%, 0 100%, 0 0, 30% 0);"></div>
+<div class="text-center">
+<span class="font-display-lg text-display-lg text-on-surface block">68%</span>
+<span class="font-label-sm text-label-sm text-secondary">Returning</span>
+</div>
+</div>
+</div>
+<div class="flex justify-center gap-6 mt-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="font-label-sm text-label-sm text-on-surface">Returning</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-surface-container-low border border-outline-variant"></div>
+<span class="font-label-sm text-label-sm text-on-surface">New Guests</span>
+</div>
+</div>
+</div>
+<!-- Top Performing Services (Span 6 cols) -->
+<div class="glass-card p-6 md:p-8 col-span-12 lg:col-span-6 min-h-[300px]">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Top Performing Services</h3>
+<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface">Balayage &amp; Toner</span>
+<span class="font-label-sm text-label-sm text-secondary">142 bookings</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface">Precision Cut</span>
+<span class="font-label-sm text-label-sm text-secondary">98 bookings</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary/80 h-full rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface">Hydration Treatment</span>
+<span class="font-label-sm text-label-sm text-secondary">64 bookings</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary/60 h-full rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface">Root Touch-up</span>
+<span class="font-label-sm text-label-sm text-secondary">41 bookings</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary/40 h-full rounded-full" style="width: 30%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Staff Utilization (Span 6 cols) -->
+<div class="glass-card p-6 md:p-8 col-span-12 lg:col-span-6 min-h-[300px] flex flex-col">
+<div class="flex justify-between items-start mb-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Staff Utilization</h3>
+<button class="text-secondary hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col gap-4">
+<!-- Staff List Items -->
+<div class="flex items-center gap-4 py-2 border-b border-white/40">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A small circular headshot of a female stylist with a warm smile, styled hair, and a minimalist black smock. Soft lighting, high-end salon context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh1FLCt-fF4UWpn39-NHz6pD8J2hMEXoKZwLGHes5WaGHkWZIe6hMS-afVyDCM1g0c2dk088hKdvLC_Tbymo-3aZaT43Kkgw-SONHGFwmBDwYOEhoty_3Z3VRU3Cn0blo6lJCk2ppVoAHZoM0F-Xy_t5uWaqwTaIVZ97ZCPdZBBkQzyc_Dn-v8W0DSajkjf3QmZxsJzRyOVfSIME-CJuu9tJQ5By4xpf4CczaNBisqgdHdkK34aPX3Uw"/>
+<div class="flex-1">
+<h4 class="font-body-md text-body-md text-on-surface">Elena R.</h4>
+<span class="font-label-sm text-label-sm text-secondary">Master Stylist</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-md text-headline-md text-on-surface">92%</span>
+<span class="font-label-sm text-label-sm text-primary">Booked</span>
+</div>
+</div>
+<div class="flex items-center gap-4 py-2 border-b border-white/40">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A small circular headshot of a male stylist looking professional and welcoming, wearing a crisp white shirt. Clean, bright salon background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLoD1cu1xeKQOiDGDCwRr0jT_8X8egRuxqDjNB8-AFJrgj5jbKpDxo4HXu2iKJOJM31r237iTGb1qS6cDl4PTsI5IxT1uQ1Q217Lc_haCpX7hym3fgkoMJ6i_ROBTG6RnpwYxJC3tb20oifI6lxiplzY5xTaQrpwWmsMx-tXwDpG1VoV0PyEUU1Tcem4Pjeih8eULwcEbL7FOepfeokdZRrEggRVp2WZZYuZ4hzfGzfJpS8bk-AJsOtQ"/>
+<div class="flex-1">
+<h4 class="font-body-md text-body-md text-on-surface">Marcus T.</h4>
+<span class="font-label-sm text-label-sm text-secondary">Colorist</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-md text-headline-md text-on-surface">88%</span>
+<span class="font-label-sm text-label-sm text-primary">Booked</span>
+</div>
+</div>
+<div class="flex items-center gap-4 py-2">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A small circular headshot of a female stylist with short, chic hair, smiling slightly. Minimalist aesthetic, soft natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfET2tw0ku_rI0cvoDKI_R0jRKkXYWvwZCgNOpuV6lHK3ls3ec4kzrSqRXZZWAB49cbB_y645hDXierDQa19jM-LpAwexb9CEiD56CpLxrss06zr4sUzuPJC3b3S_BSIbr6d3NKo3GLddWmybehZrR7wHQrumdkTyQds--256ohClw0qQZBCms1LXS9iXu0XGhtxEPF7Css85X_r8Nsj8f3rh38DTGXjqMx9vBDZ9Ec80mBe13q1fGAA"/>
+<div class="flex-1">
+<h4 class="font-body-md text-body-md text-on-surface">Sarah K.</h4>
+<span class="font-label-sm text-label-sm text-secondary">Junior Stylist</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-md text-headline-md text-on-surface">74%</span>
+<span class="font-label-sm text-label-sm text-primary">Booked</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
