@@ -58,36 +58,37 @@ function parseRequestBody(req) {
 
 const server = http.createServer(async (req, res) => {
   const parsedUrl = url.parse(req.url, true);
-  const pathname = parsedUrl.pathname;
+  const pathname = parsedUrl.pathname || '/';
+  const cleanPath = pathname.toLowerCase().replace(/\/+$/, '') || '/';
 
   // Wrap res to support Vercel helper methods .status() and .json()
   createVercelResponseWrapper(res);
 
   // ── API Routes Handler ──
-  if (pathname === '/api/booking' || pathname === '/api/booking/') {
+  if (cleanPath === '/api/booking') {
     req.body = await parseRequestBody(req);
     return bookingHandler(req, res);
   }
-  if (pathname === '/api/home-service' || pathname === '/api/home-service/') {
+  if (cleanPath === '/api/home-service') {
     req.body = await parseRequestBody(req);
     return homeServiceHandler(req, res);
   }
-  if (pathname === '/api/get-bookings' || pathname === '/api/get-bookings/') {
+  if (cleanPath === '/api/get-bookings') {
     return getBookingsHandler(req, res);
   }
-  if (pathname === '/api/signup' || pathname === '/api/signup/') {
+  if (cleanPath === '/api/signup') {
     req.body = await parseRequestBody(req);
     return signupHandler(req, res);
   }
-  if (pathname === '/api/login' || pathname === '/api/login/') {
+  if (cleanPath === '/api/login') {
     req.body = await parseRequestBody(req);
     return loginHandler(req, res);
   }
-  if (pathname === '/api/google-auth' || pathname === '/api/google-auth/') {
+  if (cleanPath === '/api/google-auth') {
     req.body = await parseRequestBody(req);
     return googleAuthHandler(req, res);
   }
-  if (pathname === '/api/user-profile' || pathname === '/api/user-profile/') {
+  if (cleanPath === '/api/user-profile') {
     req.body = await parseRequestBody(req);
     return userProfileHandler(req, res);
   }
